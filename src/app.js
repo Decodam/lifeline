@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectPage } from './config/navigationSlice';
 import HomePage from './pages/HomePage';
-import EmergencyChat from './pages/EmergencyChat';
+import EmergencyChatPage from './pages/EmergencyChatPage';
+import DoctorChatPage from './pages/DoctorChatPage';
 
 
 const App = (props) => {
@@ -35,7 +36,9 @@ const App = (props) => {
         <>
             {
                 (page === 1) ? (
-                    <EmergencyChat />
+                    <EmergencyChatPage />
+                ) : (page === 2) ? (
+                    <DoctorChatPage />
                 ) : (<HomePage />)
             }
         </>

@@ -41,7 +41,7 @@ const HomePage = (props) => {
                         </div>
                         <p className="cardlead mt-10 md:mt-0 max-w-64 font-bold text-4xl">Emergency Response</p>
                         <p className="carddesc max-w-64 mt-3 font-medium text-sm text-gray-500">Get AI assisted emergency dispatcher powered by Google Gemini API.</p>
-                        <img src={emergency} alt="Emergency Image" className="md:absolute bottom-0 right-0 md:mt-5 md:ml-5 size-48" />
+                        <img src={emergency} alt="Emergency" className="md:absolute bottom-0 right-0 md:mt-5 md:ml-5 size-48" />
                     </div>
 
                     {/* Doctor card */}
@@ -54,7 +54,7 @@ const HomePage = (props) => {
                         </div>
                         <p className="cardlead mt-10 md:mt-0 max-w-64 font-bold text-4xl">AI Assisted Diagnosis</p>
                         <p className="carddesc max-w-64 mt-3 font-medium text-sm text-gray-500">Get AI assisted preliminary diagnosis using Google Gemini API. Note this feature is in beta.</p>
-                        <img src={doctor} alt="Doctor Image" className="md:absolute  bottom-0 right-0 md:mt-5 md:ml-5 size-48" />
+                        <img src={doctor} alt="Doctor" className="md:absolute  bottom-0 right-0 md:mt-5 md:ml-5 size-48" />
                     </div>
                 </div>
 
