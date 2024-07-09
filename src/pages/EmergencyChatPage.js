@@ -32,9 +32,50 @@ const EmergencyChatPage = () => {
         setTextMode(!TextMode)
     }
 
-
+    
+    const processResponse = (text) => {
+        // Define the flag prefixes
+        const flags = {
+            location: '--location',
+            services: '--services',
+            procedure: '--procedure'
+        };
+    
+        let cleanedText = text;
+    
+        // Check for --location flag
+        if (cleanedText.includes(flags.location)) {
+            alert("Accessing your location....");
+            cleanedText = cleanedText.replace(flags.location, '');
+        }
+    
+        // Check for --services flag
+        if (cleanedText.includes(flags.services)) {
+            alert("Emergency services are on their way....");
+            cleanedText = cleanedText.replace(flags.services, '');
+        }
+    
+        // Check for --procedure flag
+        if (cleanedText.includes(flags.procedure)) {
+            const procedureStartIndex = cleanedText.indexOf(flags.procedure);
+            let procedureName = cleanedText.substring(procedureStartIndex + flags.procedure.length + 1); // Skip over "--procedure-" and the following dash
+            const spaceIndex = procedureName.indexOf(' ');
+            if (spaceIndex !== -1) {
+                procedureName = procedureName.substring(0, spaceIndex); // Extract only the first word
+            }
+            procedureName = procedureName.trim();
+            
+            const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${procedureName}`;
+            window.open(youtubeSearchUrl, '_blank');
+            cleanedText = cleanedText.replace(flags.procedure + '-' + procedureName, ''); // Replace "--procedure-procedureName" with an empty string
+        }
+    
+        // Remove extra spaces and return cleaned text
+        return cleanedText.trim();
+    };
 
     const handleSend = async () => {
+        let response;
         if (Listening) {
             setUserInput(transcript);
             SpeechRecognition.stopListening();
@@ -48,18 +89,9 @@ const EmergencyChatPage = () => {
                     bot: false
                 }
             ]);
-            let response = await sendMessageToGemini(transcript);
+            response = await sendMessageToGemini(transcript);
             resetTranscript();
-            // Update state with new message from Gemini
-            setMessages(prevMessages => [
-                ...prevMessages,
-                {
-                    message: response,
-                    bot: true
-                }
-            ]);
-        
-            setUserInput("");
+
         }
         else{                    
             // Add user's text input to Messages
@@ -71,20 +103,20 @@ const EmergencyChatPage = () => {
                 }
             ]);
 
-            let response = await sendMessageToGemini(userInput);
-
-            // Update state with new message from Gemini
-            setMessages(prevMessages => [
-                ...prevMessages,
-                {
-                    message: response,
-                    bot: true
-                }
-            ]);
-        
-            setUserInput("");
+            response = await sendMessageToGemini(userInput);
         }
+
+        let cleanText = processResponse(response)
     
+        setMessages(prevMessages => [
+            ...prevMessages,
+            {
+                message: cleanText,
+                bot: true
+            }
+        ]);
+    
+        setUserInput("");
     }
     
     
@@ -126,8 +158,10 @@ const EmergencyChatPage = () => {
         
         // Constructing the prompt based on conversation history
         
-        const promt = (lang === "hi" ? " Respond in hindi from now onwards" : "") + "-> Last Message from caller: "+input+" - Use these information to create a emergency for our caller. Try to be as quick as possible and give the caller adequete information and help them out..." + `
-            you can do the following: 1. Ask them for information, 2. ask for location and tell about available services near them depending on case. 3. guide them through life saving procedures. 4. Calm them down like a good operator should.
+        const promt = (lang === "hi" ? " Respond in hindi from now onwards" : "") + "-> Last Message from caller: "+input+` - Use these information to create a emergency for our caller. you must also attach these three flags to interact with the user based on the chat history and information you have and requirements:
+            --procedure-[procudureName] then you can redirect user to show how to do something or a procedure (for example how to use fireextengisher first aid or cpr according to situation.) with procedureName being procedure name. Use it as much as possible as showing how to do is faster in emergency
+            --location at the back of you response you will get location of the user, 
+            --services then you can call emergency services. 
         `;
     
         const result = await chat.sendMessage(promt);
