@@ -53,7 +53,7 @@ const HomePage = (props) => {
                             <IconArrowUpRight />
                         </div>
                         <p className="cardlead mt-10 md:mt-0 max-w-64 font-bold text-4xl">AI Assisted Diagnosis</p>
-                        <p className="carddesc max-w-64 mt-3 font-medium text-sm text-gray-500">Get AI assisted preliminary diagnosis using Google Gemini API. Note this feature is in beta.</p>
+                        <p className="carddesc max-w-64 mt-3 font-medium text-sm text-gray-500">Get experimental AI assisted preliminary diagnosis using the Gemini API.</p>
                         <img src={doctor} alt="Doctor" className="md:absolute  bottom-0 right-0 md:mt-5 md:ml-5 size-48" />
                     </div>
                 </div>
@@ -73,24 +73,28 @@ const HomePage = (props) => {
 
                     {/* About card */}
                     <div className="bentocard  flex flex-col justify-end border border-offwhite relative group m-3 rounded-3xl overflow-hidden flex-1 bg-grayscale p-9 cursor-pointer">
-                        <div
-                            style={{ background: "#363636" }}
-                            className="iconbutton absolute top-4 right-4 group-hover:opacity-100 opacity-100 md:opacity-0 transition-opacity size-10 flex justify-center items-center rounded-full duration-300 text-grayscale"
-                        >
-                            <IconArrowUpRight />
-                        </div>
+                        <a href="https://github.com/Decodam/lifeline" target="_blank" rel="noopener noreferrer">
+                            <div
+                                style={{ background: "#363636" }}
+                                className="iconbutton absolute top-4 right-4 group-hover:opacity-100 opacity-100 md:opacity-0 transition-opacity size-10 flex justify-center items-center rounded-full duration-300 text-grayscale"
+                            >
+                                <IconArrowUpRight />
+                            </div>
+                        </a>    
                         <p className="cardlead mt-10 md:mt-0 max-w-64 font-bold text-4xl">About us</p>
                         <p className="carddesc max-w-64 mt-3 font-medium text-sm text-gray-500">Learn more about lifeline and its mission and contribute to it.</p>
                     </div>
 
                     {/* Contact card */}
                     <div className="bentocard  flex flex-col justify-end border border-offwhite relative group m-3 rounded-3xl overflow-hidden flex-1 bg-grayscale p-9 cursor-pointer">
-                        <div
-                            style={{ background: "#363636" }}
-                            className="iconbutton absolute top-4 right-4 group-hover:opacity-100 opacity-100 md:opacity-0 transition-opacity size-10 flex justify-center items-center rounded-full duration-300 text-grayscale"
-                        >
-                            <IconArrowUpRight />
-                        </div>
+                        <a href="https://arghya-mondal-work.netlify.app/" target="_blank" rel="noopener noreferrer">
+                            <div
+                                style={{ background: "#363636" }}
+                                className="iconbutton absolute top-4 right-4 group-hover:opacity-100 opacity-100 md:opacity-0 transition-opacity size-10 flex justify-center items-center rounded-full duration-300 text-grayscale"
+                            >
+                                <IconArrowUpRight />
+                            </div>
+                        </a>
                         <p className="cardlead mt-10 md:mt-0 max-w-64 font-bold text-4xl">Contact</p>
                         <p className="carddesc max-w-64 mt-3 font-medium text-sm text-gray-500">Lets connect and discuss how we can save more lives.</p>
                     </div>
