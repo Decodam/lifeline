@@ -4,6 +4,8 @@ import Message from '../components/Message';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import Navbar from '../components/Navbar';
+import { useSelector } from 'react-redux';
+import { selectLanguage } from '../config/languageSlice';
 
 const EmergencyChatPage = () => {
     const [Listening, setListening] = useState(false);
@@ -13,6 +15,7 @@ const EmergencyChatPage = () => {
     const messagesEndRef = useRef(null);
     const chatContainerRef = useRef(null);
 
+    const lang = useSelector(selectLanguage);
     const { transcript, resetTranscript } = useSpeechRecognition();
 
     const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEN_AI_KEY);
@@ -20,7 +23,7 @@ const EmergencyChatPage = () => {
 
     const [Messages, setMessages] = useState([
         {
-            message: "Hello, I am your doctor. How can I assist you today?",
+            message: "Hey this is lifeline, what is your emergency?",
             bot: true
         },
     ])
@@ -47,18 +50,27 @@ const EmergencyChatPage = () => {
             ]);
             let response = await sendMessageToGemini(transcript);
             resetTranscript();
-                // Update state with new message from Gemini
-                setMessages(prevMessages => [
-                    ...prevMessages,
-                    {
-                        message: response,
-                        bot: true
-                    }
-                ]);
-            
-                setUserInput("");
+            // Update state with new message from Gemini
+            setMessages(prevMessages => [
+                ...prevMessages,
+                {
+                    message: response,
+                    bot: true
+                }
+            ]);
+        
+            setUserInput("");
         }
-        else{
+        else{                    
+            // Add user's text input to Messages
+            setMessages(prevMessages => [
+                ...prevMessages,
+                {
+                    message: userInput, // Use transcript here instead of userInput
+                    bot: false
+                }
+            ]);
+
             let response = await sendMessageToGemini(userInput);
 
             // Update state with new message from Gemini
@@ -76,7 +88,57 @@ const EmergencyChatPage = () => {
     }
     
     
+    // Mapping function to transform Messages to the required format
+    const transformMessages = (messages) => {
+        // Manual message to prepend
+        const manualMessage = {
+            role: "user",
+        parts: [{ text: ` ${lang === "hi" ? " Respond in hindi from now onwards" : ""} You are an AI emergency dispatcher (similar to 911). you are supposed to help the callers out as their emergency lifeline. Try to solve their problems and be proactive and innovative. If necesary you can
+            1. Ask them them their location.
+            2. Tell where necesary emergency services can be found based on their location. Also provide with emergency numbers
+            3. No need to mention that you are ai, the user already knows this is just for research. Just make it natural and realistic. 
+            4. You can guide them with emergency life saving procedures as you might be their only help` 
+        }]
+        };
     
+        // Mapping existing messages and prepending the manual message
+        const transformedMessages = [
+            manualMessage,
+            ...messages.map((msg) => ({
+                role: msg.bot ? "model" : "user",
+                parts: [{ text: msg.message }],
+            }))
+        ];
+    
+        return transformedMessages;
+    };
+    
+    const sendMessageToGemini = async (input) => {
+        const messageHistory = transformMessages(Messages);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    
+        const chat = model.startChat({
+            history: messageHistory,
+            generationConfig: {
+                maxOutputTokens: 100,
+            },
+        });
+        
+        // Constructing the prompt based on conversation history
+        
+        const promt = (lang === "hi" ? " Respond in hindi from now onwards" : "") + "-> Last Message from caller: "+input+" - Use these information to create a emergency for our caller. Try to be as quick as possible and give the caller adequete information and help them out...";
+    
+        const result = await chat.sendMessage(promt);
+        const response = await result.response;
+        let text = response.text();
+    
+        // Remove asterisks and hash symbols
+        text = text.replace(/[*#]/g, '');
+    
+        return text;
+    }
+
+
 
     const startListening = () => {
         if(Listening){
@@ -99,7 +161,6 @@ const EmergencyChatPage = () => {
         }
     };
 
-    
 
     const handleCancel = () => {
         SpeechRecognition.stopListening();
@@ -108,35 +169,6 @@ const EmergencyChatPage = () => {
         setTextMode(false);
         setUserInput("");
     }
-
-    const sendMessageToGemini = async (input) => {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    
-        // Constructing the prompt based on conversation history
-        let prompt = "Help me as a medical student to make a diagnosis based on the given information:\n";
-    
-        Messages.forEach((message) => {
-            if (message.bot) {
-                prompt += `Doctor: ${message.message}\n`;
-            } else {
-                prompt += `Patient: ${message.message}\n`;
-            }
-        });
-        prompt += "Please provide your diagnosis in a simple text format else if you need more information ask more questions (1 question at a time like a proper doctor, imagine having a conversation with me). Try Making a diagonosis quickly. It's just for testing purposes.";
-        prompt+= "Last Message: " + input;
-    
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        let text = response.text();
-    
-        // Remove asterisks and hash symbols
-        text = text.replace(/[*#]/g, '');
-    
-        return text;
-    }
-    
-    
-    
 
 
     useEffect(() => {

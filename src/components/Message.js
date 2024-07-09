@@ -19,11 +19,11 @@ const Message = (props) => {
         if(props.bot && props.last) {
             speech({
                 text: props.text,
-                lang: 'en-GB',
+                lang: 'hi-IN',
                 volume: 0.8,
                 rate: 1.1,
                 pitch: 1,
-                voice: 'Google UK English Male'
+                voice: 'Google हिन्दी'
             });
         }
     }, [])

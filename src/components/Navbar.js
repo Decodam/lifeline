@@ -2,22 +2,32 @@ import React, { useState } from 'react';
 import { Squeeze as Hamburger } from 'hamburger-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPage, setPage } from '../config/navigationSlice';
+import { selectLanguage, setLanguage } from '../config/languageSlice';
 
 
 const Navbar = (props) => {
     const [isOpen, setOpen] = useState(false);
     const dispatch = useDispatch();
     const page = useSelector(selectPage);
+    const lang = useSelector(selectLanguage);
 
     const toggleNav = () => {
         setOpen(!isOpen);
+    }
+
+    const toggleLanguage = () => {
+        if(lang === "en"){
+            dispatch(setLanguage("hi"))
+        } else {
+            dispatch(setLanguage("en"))
+        }
     }
 
     return(
         <>
             <header className='flex z-10 fixed top-0 left-0 w-screen justify-center items-center h-14 bg-white'>
                 <nav className='flex w-full max-w-4xl mx-5 justify-between items-center border-b border-b-stone-200 h-full'>
-                    <div className="nav-logo text-primary font-semibold cursor-pointer sm:ml-10 text-xl sm:text-lg">Lifeline.{page === 1 ? "emegency" : page === 2 ? "doctor" : "ai"  }</div>
+                    <div onClick={() => {dispatch(setPage(0))}} className="nav-logo text-primary font-semibold cursor-pointer sm:ml-10 text-xl sm:text-lg">Lifeline.{page === 1 ? "emegency" : page === 2 ? "doctor" : "ai"  }</div>
                     
                     {page === 0 && (
                         <div className="nav-list hidden sm:flex sm:mr-10 items-center">
@@ -27,7 +37,8 @@ const Navbar = (props) => {
                         </div>
                     )}
 
-                    <div className={`nav-btn z-20 ${page === 0 ? "sm:hidden" : ""}`}>
+                    <div className={`nav-btn z-20 flex items-center ${page === 0 ? "sm:hidden" : ""}`}>
+                        {page !== 0 && (<div className='mr-4 font-semibold text-sm cursor-pointer' onClick={toggleLanguage}>{lang === "en" ? "हिंदी" : "Eng"}</div>)}
                         <Hamburger size={20} toggled={isOpen} toggle={setOpen} />
                     </div>
                 </nav>
