@@ -68,7 +68,7 @@ const HomePage = (props) => {
                             <IconArrowUpRight />
                         </div>
                         <p className="cardlead mt-10 md:mt-0 max-w-64 font-bold text-4xl">Learn Procedures</p>
-                        <p className="carddesc max-w-64 mt-3 font-medium text-sm text-gray-500">GLearn more about life saving emergency procedures and how to perform them.</p>
+                        <p className="carddesc max-w-64 mt-3 font-medium text-sm text-gray-500">Learn more about life saving emergency procedures and how to perform them.</p>
                     </div>
 
                     {/* About card */}

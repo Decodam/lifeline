@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# Life Line - Emergency Response and AI Doctor App
+Life Line is a reliable emergency response app designed to provide quick and effective assistance during critical situations. The app uses Google's Gemini API to provide users with AI assisted emergency response, aid and Diagnosis through an experimental AI doctor feature.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Life Line Poster](./screenshots/poster.png)
 
-## Available Scripts
+## Introduction and Inspiration
 
-In the project directory, you can run:
+The medical care system in a developing nation like India is severely overburdened, with a doctor-to-patient ratio far below the World Health Organization's recommended standard. Emergency response times are often slow, particularly in rural areas, where the average response time can exceed 30 minutes. Doctors are overstressed, frequently dealing with an overwhelming influx of patients that prevents them from giving each patient the proper time and attention needed for effective care. According to a 2020 report, India had just one doctor for every 1,457 people, well below the WHO's recommendation of one doctor per 1,000 people.
 
-### `npm start`
+I have personally experienced the shortcomings of this system. In a critical situation, the delayed emergency response and the rushed consultations made it evident that something needed to change. This experience inspired me to build Life Line, a solution aimed at improving emergency response times and providing preliminary medical assistance to alleviate the pressure on healthcare professionals. With AI based emergency dispatcher and an AI Doctor for diagnosis and preliminary assesment, Lifeline is a complete solution to provide healthcare to those who cant access it.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **Quick Access to Emergency Services**: Connects users to emergency services instantly using Gemini API.
+- **AI Assited Diagnosis**: Experimental AI doctor feature revolutionize healthcare by providing accurate and quick diagnosis to patients who may not have access to proper healthcare.
+- **Regional Language Voice Input**: All these features can be used using voice commands and inputs. And these inputs are available in regional languages (Hindi) for easier access of masses.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## AI Doctor
+The AI Doctor feature in Life Line is designed to assist users with medical inquiries and provide preliminary diagnosis based on symptoms.
 
-### `npm run build`
+### Features and Capabilities
+- **Symptom Checker:** Users can input their symptoms and receive possible diagnoses and advice.
+- **Reports and Imaging :** Users can upload their medical scans or reports to the ai for it to make a diagnosis
+- **Results and Treatment Plan:** The AI conducts through assestment and provides a detailed diagnosis with reasoning and treatment plan and medications and also provides referals to senior consultants.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Real World Testing and Validation
+- **Disease Testing:** The AI Doctor has been tested on a wide range of diseases to ensure accuracy and reliability.
+- **Collaboration with Real Doctors:** We've collaborated with medical professionals to validate the AI's recommendations and improve its diagnostic capabilities.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Installation
 
-### `npm run eject`
+Follow these steps to install and run the Life Line app locally:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/Decodam/lifeline.git
+    ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Navigate to the project directory**:
+    ```sh
+    cd lifeline-app
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Install the dependencies**:
+    ```sh
+    npm install
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. **Add Gemini API Key to a .env file**:
+    ```.env
+    REACT_APP_GEN_AI_KEY=YOURAPIKEY
+    ```
 
-## Learn More
+4. **Run the app**:
+    ```sh
+    npm start
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The app will be available at `http://localhost:3000`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Usage
 
-### Code Splitting
+- **Accessing Emergency Services**: Click on the emergency button to connect with local emergency services.
+- **Accessing AI Doctor**: Click on the AI Diagnosis button to connect with AI Doctor.
+- **Uploading Reports**: Click on the attachment button on the AI doctor Screen to upload medical imaging or reports.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+## Screenshots
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![Life Line LandingPage](./screenshots/landing.png)
 
-### Making a Progressive Web App
+## Core Technologies Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **React**: For building the user interface.
+- **Tailwind CSS**: For designing the website with faster workflow.
+- **Redux**: For state managment and navigation.
+- **Google Gemini API**: For generative ai responses.
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## License
 
-### Deployment
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Contact
 
-### `npm run build` fails to minify
+If you have any questions or suggestions, feel free to reach out to me at <a href="arghya-mondal-work.netlify.app">my website</a>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+Thank you for using Life Line. Lets save lives!
