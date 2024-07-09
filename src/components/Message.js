@@ -2,8 +2,11 @@ import React, { useEffect } from 'react';
 import { IconVolume, IconClipboard } from "@tabler/icons-react";
 import { ReactTyped } from "react-typed";
 import speech from 'react-tts-voice';
+import { useSelector } from 'react-redux';
+import { selectLanguage } from '../config/languageSlice';
 
 const Message = (props) => {
+    const lang = useSelector(selectLanguage);
 
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text).then(() => {
@@ -13,21 +16,21 @@ const Message = (props) => {
         });
     };
 
-
-    
     useEffect(() => {
-        if(props.bot && props.last) {
+        if (props.bot && props.last) {
             speech({
                 text: props.text,
-                lang: 'hi-IN',
+                lang: lang === 'hi' ? 'hi-IN' : 'en-GB',
                 volume: 0.8,
                 rate: 1.1,
                 pitch: 1,
-                voice: 'Google हिन्दी'
+                voice: lang === 'hi' ? 'Google हिन्दी' : 'Google UK English Male'
             });
         }
-    }, [])
+    }, [props.bot, props.last, props.text, lang]);
 
+
+    
     return (
         <div className='my-4'>
             <div className={`message-text w-fit ${props.bot ? "font-semibold text-stone-900" : "font-medium text-stone-600 ml-auto text-right"} text-lg sm:text-xl max-w-60 sm:max-w-screen-md ${!props.bot ? "bg-grayscale" : "bg-transparent"} p-4 rounded-3xl`}>
@@ -51,11 +54,11 @@ const Message = (props) => {
                         <button onClick={() => {
                             speech({
                                 text: props.text,
-                                lang: 'en-UK',
+                                lang: lang === 'hi' ? 'hi-IN' : 'en-GB',
                                 volume: 0.8,
                                 rate: 1.1,
                                 pitch: 1,
-                                voice: 'Google UK English Male	'
+                                voice: lang === 'hi' ? 'Google हिन्दी' : 'Google UK English Male'
                             });
                         }}>
                             <IconVolume color='#aaa' size={16} />

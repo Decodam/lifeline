@@ -126,7 +126,9 @@ const EmergencyChatPage = () => {
         
         // Constructing the prompt based on conversation history
         
-        const promt = (lang === "hi" ? " Respond in hindi from now onwards" : "") + "-> Last Message from caller: "+input+" - Use these information to create a emergency for our caller. Try to be as quick as possible and give the caller adequete information and help them out...";
+        const promt = (lang === "hi" ? " Respond in hindi from now onwards" : "") + "-> Last Message from caller: "+input+" - Use these information to create a emergency for our caller. Try to be as quick as possible and give the caller adequete information and help them out..." + `
+            you can do the following: 1. Ask them for information, 2. ask for location and tell about available services near them depending on case. 3. guide them through life saving procedures. 4. Calm them down like a good operator should.
+        `;
     
         const result = await chat.sendMessage(promt);
         const response = await result.response;
