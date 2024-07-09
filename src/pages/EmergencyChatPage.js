@@ -159,7 +159,7 @@ const EmergencyChatPage = () => {
         // Constructing the prompt based on conversation history
         
         const promt = (lang === "hi" ? " Respond in hindi from now onwards" : "") + "-> Last Message from caller: "+input+` - Use these information to create a emergency for our caller. you must also attach these three flags to interact with the user based on the chat history and information you have and requirements:
-            --procedure-[procudureName] then you can redirect user to show how to do something or a procedure (for example how to use fireextengisher first aid or cpr according to situation.) with procedureName being procedure name. Use it as much as possible as showing how to do is faster in emergency
+            --procedure-[procudureName] then you can redirect user to show how to do something or a procedure (for example how to use fireextengisher first aid or cpr according to situation put them in one word like firstAid.) with procedureName being procedure name. Use it as much as possible as showing how to do is faster in emergency
             --location at the back of you response you will get location of the user, 
             --services then you can call emergency services. 
         `;
