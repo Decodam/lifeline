@@ -1,6 +1,9 @@
 # Life Line - Emergency Response and AI Doctor App
 Life Line is a reliable emergency response app designed to provide quick and effective assistance during critical situations. The app uses Google's Gemini API to provide users with AI assisted emergency response, aid and Diagnosis through an experimental AI doctor feature.
 
+- **Website:** https://lifeline-ai.netlify.app/
+- **Youtube Demo:** https://youtu.be/NXbpUvhBgII
+
 ![Life Line Poster](./screenshots/poster.png)
 
 ## Introduction and Inspiration
