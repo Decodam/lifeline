@@ -47,19 +47,67 @@ const Message = (props) => {
           <>
             <ReactTyped
               strings={[
-                props.text
-                  .split(".")
-                  .filter(Boolean)
-                  .map((s) => s.trim())
-                  .map((s) => {
-                    const listPattern = /^(?:\d+\.|[ivxlcdm]+\.|[a-z]\))/i;
-                    if (listPattern.test(s)) {
-                      return "\u00A0\u00A0\u00A0" + s; // indent with 3 non-breaking spaces
+                (() => {
+                  const sentences = props.text.match(/[^.?!]+[.?!]?/g) || [];
+                  const output = [];
+                  let buffer = "";
+                  let insideNumberedPoint = false;
+
+                  const isNumberedStart = (str) => {
+                    // Match number + dot + space, but NOT decimals like 1.3 or 2.5
+                    return /^\d+\.\s/.test(str);
+                  };
+
+                  for (let i = 0; i < sentences.length; i++) {
+                    const current = sentences[i].trim();
+
+                    // Check if current ends with colon :
+                    const endsWithColon = current.endsWith(":");
+
+                    if (isNumberedStart(current)) {
+                      if (buffer) {
+                        output.push(buffer);
+                      }
+                      buffer = current;
+                      insideNumberedPoint = true;
+
+                      // If colon at end of numbered start line, push buffer immediately to break line
+                      if (endsWithColon) {
+                        output.push(buffer);
+                        buffer = "";
+                        insideNumberedPoint = false;
+                      }
+                    } else if (insideNumberedPoint) {
+                      buffer += " " + current;
+
+                      // If colon inside numbered point, break buffer here
+                      if (endsWithColon) {
+                        output.push(buffer);
+                        buffer = "";
+                        insideNumberedPoint = false;
+                      }
                     } else {
-                      return `> ${s}`;
+                      // Normal line prefix with >
+                      output.push(`${current}`);
+
+                      // Colon in normal lines means break line naturally anyway (already separate)
                     }
-                  })
-                  .join("<br/><br/>"),
+
+                    // Peek next sentence for numbered start to flush buffer
+                    const next = sentences[i + 1]?.trim() || "";
+                    if (insideNumberedPoint && isNumberedStart(next)) {
+                      output.push(buffer);
+                      buffer = "";
+                      insideNumberedPoint = false;
+                    }
+                  }
+
+                  if (buffer) {
+                    output.push(buffer);
+                  }
+
+                  return output.join("<br/><br/>");
+                })(),
               ]}
               typeSpeed={40}
               backSpeed={50}
