@@ -51,14 +51,21 @@ const Message = (props) => {
                   .split(".")
                   .filter(Boolean)
                   .map((s) => s.trim())
-                  .map((s) => `> ${s}`) // dash but no dot
-                  .join("<br/><br/>"), // join with html breaks
+                  .map((s) => {
+                    const listPattern = /^(?:\d+\.|[ivxlcdm]+\.|[a-z]\))/i;
+                    if (listPattern.test(s)) {
+                      return "\u00A0\u00A0\u00A0" + s; // indent with 3 non-breaking spaces
+                    } else {
+                      return `> ${s}`;
+                    }
+                  })
+                  .join("<br/><br/>"),
               ]}
               typeSpeed={40}
               backSpeed={50}
               showCursor={false}
               loop={false}
-              html // THIS tells ReactTyped to treat strings as html
+              html
             />
           </>
         ) : (
