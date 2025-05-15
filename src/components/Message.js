@@ -47,18 +47,18 @@ const Message = (props) => {
           <>
             <ReactTyped
               strings={[
-                // Transform the text: split on '.' and join with new lines and points
                 props.text
                   .split(".")
-                  .filter(Boolean) // remove empty strings caused by trailing dots
+                  .filter(Boolean)
                   .map((s) => s.trim())
-                  .map((s) => `• ${s}.`) // add bullet and add period back
-                  .join("\n"),
+                  .map((s) => `> ${s}`) // dash but no dot
+                  .join("<br/><br/>"), // join with html breaks
               ]}
               typeSpeed={40}
               backSpeed={50}
               showCursor={false}
               loop={false}
+              html // THIS tells ReactTyped to treat strings as html
             />
           </>
         ) : (
