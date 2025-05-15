@@ -78,7 +78,7 @@ const DoctorChatPage = () => {
         const chat = model.startChat({
             history: messageHistory,
             generationConfig: {
-                maxOutputTokens: 100,
+                maxOutputTokens: 200,
             },
         });
         
