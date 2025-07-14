@@ -271,7 +271,19 @@ const DoctorChatPage = () => {
 
                     {TextMode ? (
                         <>
-                            <input type="text" placeholder='What is your question?' name="message" value={userInput} className='flex-1 min-w-0 h-full' onChange={(e) => setUserInput(e.target.value)} />
+                            <input
+                                type="text"
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleSend();
+                                    }
+                                }}
+                                placeholder='What is your question?'
+                                name="message"
+                                value={userInput}
+                                className='flex-1 min-w-0 h-full'
+                                onChange={(e) => setUserInput(e.target.value)}
+                            />
                             <div onClick={handleSend} className={`bg-primary mx-4 size-12 sm:w-20 rounded-full flex justify-center items-center cursor-pointer sm:hover:bg-primary sm:hover:scale-105 transition`}>
                                 <IconSend color='#fff' />
                             </div>
